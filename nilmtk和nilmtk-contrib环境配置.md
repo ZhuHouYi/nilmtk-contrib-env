@@ -242,4 +242,17 @@ conda install hdf5=1.10.6(会自动安装兼容的pytable依赖)
 
 # 其他说明
 
-本人的第一篇博客，如果对你有用请点个赞吧
+最终配置的环境文件导出在`requirement.txt`和`requirement.yaml`文件下，如果您的显卡和`cuda`版本与本次教程对应，可以尝试`conda env create -f requirement.yaml `来安装环境
+
+
+
+这是本人的第一篇博客，如果对您有用请点个赞吧。
+
+
+
+
+
+
+
+
+
