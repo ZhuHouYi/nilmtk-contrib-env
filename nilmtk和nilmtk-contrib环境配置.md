@@ -252,6 +252,64 @@ conda install hdf5=1.10.6(会自动安装兼容的pytable依赖)
 
 
 
+# 2024-03-13 补充
+
+- 使用基于`setuptools`库的`setup.py`构建的`nilmtk-contrib`包，会在`site-packages`目录下生成`nilmtk_contrib-0.1.2.dev1+git.692320c-py3.8.egg`文件，该文件为压缩文件，文件内部有完整的`nilmtk-contrib`模块，能在代码中正常导入该包。但关键问题是无法对其进行编辑，这对于后续负荷分解实验的自定义对比、模型保存和绘图不友好。
+
+解决方法：重写`nilmtk-contrib-master`目录下的`setup.py`文件，将`from setuptools import setup`换为`from distutils.core import setup`，基于`distutils`来构建`setup.py`并再次进行
+
+````
+python setup.py install
+````
+
+重新安装`nilmtk-contrib`。`distutils`安装方式为直接将`nilmtk-contrib`复制到`site-packages`目录下，并生成`nilmtk-contrib.egg-info`的元信息，后续可对代码进行编辑。
+
+![image-20240313083002061](.\pic\image-20240313083002061.png)
+
+![image-20240313083114011](.\pic\image-20240313083114011.png)
+
+![image-20240313083208665](.\pic\image-20240313083208665.png)
+
+
+
+
+
+# 2024-04-20 补充：
+
+为了适配新一轮的Embedding 工作，需要配置tensorflow1.x环境，此次更新补充相关内容：
+
+根据tensorflow官网测试后的环境配置，打算先从`tensorflow1.15.0`和`cuda10入手`：
+
+![image-20240420143831929](./pic\image-20240420143831929.png)
+
+先直接用以下命令安装，测试阶段报错。现有的`cuda=11.2`无法适配该版本的`tensorflow`
+
+`pip install tensorflow-gpu==1.15 -i https://pypi.tuna.tsinghua.edu.cn/simple `
+
+![image-20240420145835915](./pic\image-20240420145835915.png)
+
+![image-20240420150025475](./pic\image-20240420150025475.png)
+
+解决方案1：配置`cuda=10.x,cudnn=7.x`的系统环境
+
+```
+cuda:
+https://developer.nvidia.com/cuda-10.0-download-archive?target_os=Windows&target_arch=x86_64&target_version=10&target_type=exelocal
+
+cudnn:
+https://developer.nvidia.com/rdp/cudnn-archive#a-collapse765-10
+```
+
+
+
+`tensorflow 1.x`环境配置完毕，接下来安装其他需要的库即可。
+
+![image-20240420152100827](./pic\image-20240420152100827.png)
+
+
+
+
+
 
 
 
